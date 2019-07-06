@@ -16,15 +16,33 @@
     <navMap>
         <% var _index = 0; %>
 
-        <% content.forEach(function(content, index){ %>
-            <% if(!content.excludeFromToc && !content.beforeToc){ %>
-                <navPoint id="content_<%= index %>_<%= content.id %>" playOrder="<%= _index++ %>" class="chapter">
-                    <navLabel>
-                        <text><%= (1+index) + ". " + (content.title || "Chapter " + (1+index))%></text>
-                    </navLabel>
-                    <content src="<%= content.href %>"/>
-                </navPoint>
-            <% } %>
+        <navPoint id="toc" playOrder="<%= _index++ %>" class="chapter">
+            <navLabel>
+                <text><%= tocTitle %></text>
+            </navLabel>
+            <content src="toc.xhtml"/>
+        </navPoint>
+
+        <% content.forEach(function(section, sectionIndex){ %>
+
+        <navPoint id="section-<%= sectionIndex %>" playOrder="<%= _index++ %>" class="chapter">
+            <navLabel>
+                <text><%= section.title %></text>
+                <content src="<%= section.coverContent.href %>"/>
+            </navLabel>
+
+            <% section.content.forEach(function(chapterContent, index){ %>
+
+                <% if(!chapterContent.excludeFromToc && !chapterContent.beforeToc){ %>
+                    <navPoint id="content_<%= sectionIndex %>_<%= index %>_<%= chapterContent.id %>" playOrder="<%= _index++ %>" class="chapter">
+                        <navLabel>
+                            <text><%= (1+sectionIndex) + ". " + (1+index) + ". " + (chapterContent.title || "Chapter " + (1+index))%></text>
+                        </navLabel>
+                        <content src="<%= chapterContent.href %>"/>
+                    </navPoint>
+                <% } %>
+            <% }) %>
+        </navPoint>
         <% }) %>
     </navMap>
 </ncx>
