@@ -68,7 +68,16 @@ Then put this in your code:
 - `customHtmlTocTemplatePath`:
     Optional. For advanced customizations: absolute path to a HTML toc template.
 - `content`:
-    Book Chapters content. It's should be an array of objects. eg. `[{title: "Chapter 1",data: "<div>..."}, {data: ""},...]`
+    Book Chapters content. It's should be an array of sections. eg. `[{title: "Section 1", data: [{title: "Chapter 1", data: "<div>..."}, ...]},...]`
+
+    **Within each section object:**
+
+    - `title`:
+        section title
+    - `coverContent`:
+        a chapter object, which represents the page the section's title in the TOC redirects to  
+    - `data`:
+        required, HTML String of the chapter content. image paths should be absolute path (should start with "http" or "https"), so that they could be downloaded. With the upgrade is possible to use local images (for this the path 	must start with file: //)
 
     **Within each chapter object:**
 
