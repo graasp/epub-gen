@@ -5,27 +5,45 @@
     <title><%= title %></title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <style>
+    ol {
+    counter-reset: item
+    }
+    li {
+    display: block
+    }
+    li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item
+    }
+    </style>
 </head>
 <body>
 <h1 class="h1"><%= tocTitle %></h1>
 <nav id="toc" epub:type="toc">
     <ol>
-        <% content.forEach(function(content, index){ %>
-            <% if(!content.excludeFromToc && content.beforeToc){ %>
-                <li class="table-of-content">
-                    <a href="<%= content.href %>"><%= (content.title || "Chapter "+ (1+index)) %><% if(content.author.length){ %> - <small class="toc-author"><%= content.author.join(",") %></small><% }%><% if(content.url){ %><span class="toc-link"><%= content.url %></span><% }%></a>
-                </li>
-            <% } %>
-        <% }) %>
-        <li class="table-of-content">
-            <a href="toc.xhtml">- <%= tocTitle %> -</a>
-        </li>
-        <% content.forEach(function(content, index){ %>
-            <% if(!content.excludeFromToc && !content.beforeToc){ %>
-                <li class="table-of-content">
-                    <a href="<%= content.href %>"><%= (content.title || "Chapter "+ (1+index)) %><% if(content.author.length){ %> - <small class="toc-author"><%= content.author.join(",") %></small><% }%><% if(content.url){ %><span class="toc-link"><%= content.url %></span><% }%></a>
-                </li>
-            <% } %>
+        <% content.forEach(function(section, sectionIndex){ %>
+            <li class="section">
+                <a href="<%= section.coverContent.href %>">
+                    <%= section.title %>
+                </a>
+                <ol>
+                    <% section.content.forEach(function(chapterContent, index){ %>
+                        <% if(!chapterContent.excludeFromToc && !chapterContent.beforeToc){ %>
+                            <li class="table-of-content">
+                                <a href="<%= chapterContent.href %>"><%= (chapterContent.title || "Chapter "+ (1+index)) %>
+                                    <% if(chapterContent.author.length){ %>
+                                        - <small class="toc-author"><%= chapterContent.author.join(",") %></small>
+                                    <% }%>
+                                    <% if(chapterContent.url){ %>
+                                    <span class="toc-link"><%= chapterContent.url %></span>
+                                    <% }%>
+                                </a>
+                            </li>
+                        <% } %>
+                    <% }) %>
+                </ol>
+            </li>
         <% }) %>
     </ol>
 </nav>
