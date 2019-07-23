@@ -54,6 +54,10 @@
             <% }) %>
         <% }) %>
 
+        <% if(backCover){ %>
+            <item id="backCover" href="<%= backCover.href %>" media-type="application/xhtml+xml" />
+        <% } %>
+
         <% fonts.forEach(function(font, index){%>
         <item id="font_<%= index%>" href="fonts/<%= font %>" media-type="application/x-font-ttf" />
         <%})%>
@@ -61,6 +65,9 @@
 
     <spine toc="ncx">
         <itemref idref="toc" />
+        <% if(backCover){ %>
+            <itemref idref="backCover" />
+        <% } %>
         <% content.forEach(function(section, sectionIndex){ %>
             <itemref idref="content_<%= sectionIndex %>_<%= sectionIndex %>"/>
             <% section.content.forEach(function(chapterContent, index){ %>
