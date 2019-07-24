@@ -95,6 +95,8 @@ Then put this in your code:
         optional, specify filename for each chapter, default: undefined;
 - `verbose`:
     specify whether or not to console.log progress messages, default: false.
+- `backCover`:
+    optional, Object whose `data` attribute is the hmtl content of the back cover
 
 #### Output
 If you don't want pass the output pass the output path as the second argument, you should specify output path as `option.output`.
