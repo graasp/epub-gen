@@ -39,7 +39,7 @@
         <item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" properties="nav"/>
         <item id="css" href="style.css" media-type="text/css" />
 
-        <% if(locals.cover) { %>
+        <% if (locals.cover) { %>
         <item id="image_cover" href="cover.<%= _coverExtension %>" media-type="<%= _coverMediaType %>" />
         <% } %>
 
@@ -54,7 +54,7 @@
             <% }) %>
         <% }) %>
 
-        <% if(backCover){ %>
+        <% if (backCover){ %>
             <item id="backCover" href="<%= backCover.href %>" media-type="application/xhtml+xml" />
         <% } %>
 
@@ -65,13 +65,13 @@
 
     <spine toc="ncx">
         <itemref idref="toc" />
-        <% if(backCover){ %>
+        <% if (backCover){ %>
             <itemref idref="backCover" />
         <% } %>
         <% content.forEach(function(section, sectionIndex){ %>
             <itemref idref="content_<%= sectionIndex %>_<%= sectionIndex %>"/>
             <% section.content.forEach(function(chapterContent, index){ %>
-                <% if(!chapterContent.beforeToc && !chapterContent.excludeFromToc){ %>
+                <% if (!chapterContent.beforeToc && !chapterContent.excludeFromToc){ %>
                     <itemref idref="content_<%= sectionIndex %>_<%= index %>_<%= chapterContent.id %>"/>
                 <% } %>
             <% }) %>
